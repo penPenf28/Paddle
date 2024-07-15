@@ -372,4 +372,13 @@ void TdmSamplerInferMeta(const MetaTensor& x,
                          MetaTensor* mask,
                          MetaConfig config = MetaConfig());
 
+void CacheEvitInferMeta(const MetaTensor& x,
+                        const MetaTensor& choice_index,
+                        int32_t num_head,
+                        int32_t topk,
+                        int32_t sink_tokens,
+                        int32_t proxy_tokens,
+                        int32_t random_keeps,
+                        MetaTensor* out);
+
 }  // namespace phi

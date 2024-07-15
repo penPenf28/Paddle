@@ -733,6 +733,15 @@
     func : c_sync_comm_stream
   inplace : (x -> out)
 
+- op : cache_evit
+  args : (Tensor x, Tensor choice_index, int num_head=32, int topk=512, int sink_tokens = 256, int proxy_tokens=256, int random_keeps=512)
+  output :  Tensor(out)
+  infer_meta :
+    func : CacheEvitInferMeta
+  kernel :
+    func : cache_evit
+    data_type : x
+
 - op : cast
   args : (Tensor x, DataType dtype)
   output : Tensor(out)

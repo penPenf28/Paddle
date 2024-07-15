@@ -2235,4 +2235,27 @@ void TdmSamplerInferMeta(const MetaTensor& x,
     labels->set_dtype(x.dtype());
   }
 }
+
+void CacheEvitInferMeta(const MetaTensor& x,
+                        const MetaTensor& choice_index,
+                        int32_t num_head,
+                        int32_t topk,
+                        int32_t sink_tokens,
+                        int32_t proxy_tokens,
+                        int32_t random_keeps,
+                        MetaTensor* out) {
+  const auto& dims = x.dims();
+  PADDLE_ENFORCE(
+      dims.size() == 3,
+      phi::errors::InvalidArgument("cache_evit receive input must be dim "
+                                   "[batch_size, num_head, seq_k]"));
+  // int batch_size = q.dims()[0];
+  // int seq_k = x.dims()[2];
+  if (out) {
+    out->set_dtype(x.dtype());
+    out->set_dims(
+        {1, num_head, sink_tokens + proxy_tokens + topk + random_keeps});
+  }
+}
+
 }  // namespace phi
